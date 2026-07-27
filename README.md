@@ -2,6 +2,11 @@
 
 A lightweight Context Engineering layer that prepares structured context for AI agents.
 
+## Live Demo
+
+- Frontend: https://context-bridge-zeta.vercel.app/
+- Backend API: https://contextbridge-w2fk.onrender.com
+
 ## Project Overview
 
 ContextBridge demonstrates how an AI agent can gather, rank, and assemble context from multiple data sources before calling an LLM — going beyond simple vector search.
