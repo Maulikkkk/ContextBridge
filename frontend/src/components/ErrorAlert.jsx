@@ -10,7 +10,7 @@ export function ErrorAlert({ message, onDismiss }) {
         <div className="flex-1">
           <p className="text-sm font-semibold text-red-800">{message}</p>
           <p className="mt-1 text-xs text-red-600">
-            Ensure the backend is running at localhost:8001 and meeting notes are ingested.
+            Ensure the backend is reachable and meeting notes are ingested via POST /ingest.
           </p>
         </div>
         {onDismiss && (
