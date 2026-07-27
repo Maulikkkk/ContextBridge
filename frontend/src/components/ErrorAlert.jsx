@@ -9,9 +9,11 @@ export function ErrorAlert({ message, onDismiss }) {
         </svg>
         <div className="flex-1">
           <p className="text-sm font-semibold text-red-800">{message}</p>
-          <p className="mt-1 text-xs text-red-600">
-            Ensure the backend is reachable and meeting notes are ingested via POST /ingest.
-          </p>
+          {!message.includes('ingest') && !message.includes('502') && !message.includes('backend') && (
+            <p className="mt-1 text-xs text-red-600">
+              Ensure the backend is reachable and meeting notes are ingested via POST /ingest.
+            </p>
+          )}
         </div>
         {onDismiss && (
           <button

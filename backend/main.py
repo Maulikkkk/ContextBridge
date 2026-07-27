@@ -29,11 +29,17 @@ async def lifespan(app: FastAPI):
     log_startup_diagnostics()
     init_chroma_client()
     model_ok = init_embedding_model()
+    from embeddings import chroma_has_notes
+
     if not model_ok:
         logger.warning(
-            "Embedding model failed to load at startup: %s — /ingest will return errors until resolved",
+            "Embedding model failed to load at startup: %s",
             get_embedding_model_error(),
         )
+    elif chroma_has_notes():
+        logger.info("ChromaDB has indexed meeting notes — ready for queries")
+    else:
+        logger.warning("ChromaDB has no indexed notes — run POST /ingest")
     yield
 
 

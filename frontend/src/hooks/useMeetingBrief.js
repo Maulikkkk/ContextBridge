@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { generateMeetingBrief, fetchHealth } from '../services/api';
+import { generateMeetingBrief, fetchHealth, getApiErrorMessage } from '../services/api';
 
 const LOADING_STAGES = [
   'Building Context Package...',
@@ -90,12 +90,14 @@ export function useMeetingBrief() {
       setResult(data);
       setActivePipelineStep(PIPELINE_STEPS.length - 1);
       setPipelineComplete(true);
-    } catch {
+    } catch (err) {
       clearInterval(stageInterval);
       stopPipelineAnimation();
       setActivePipelineStep(-1);
       setPipelineComplete(false);
-      setError('Unable to generate meeting brief. Please try again.');
+      setError(
+        getApiErrorMessage(err, 'Unable to generate meeting brief. Please try again.'),
+      );
     } finally {
       setLoading(false);
       setLoadingStage(0);

@@ -2,16 +2,17 @@ import logging
 from typing import Optional
 
 import chromadb
-from sentence_transformers import SentenceTransformer
+from fastembed import TextEmbedding
 
 from paths import CHROMA_PATH, ensure_runtime_dirs
 
 logger = logging.getLogger(__name__)
 
-EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+# Lightweight ONNX model (~80MB RAM vs ~500MB+ for sentence-transformers/torch)
+EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
 COLLECTION_NAME = "meeting_notes"
 
-_model: Optional[SentenceTransformer] = None
+_model: Optional[TextEmbedding] = None
 _model_load_error: Optional[str] = None
 _chroma_client: Optional[chromadb.PersistentClient] = None
 _cache_use_logged = False
@@ -36,7 +37,7 @@ def get_chroma_client() -> chromadb.PersistentClient:
 
 def init_embedding_model() -> bool:
     """
-    Load SentenceTransformer once at startup.
+    Load embedding model once at startup (FastEmbed ONNX — low memory).
     Returns True on success, False on failure (app continues running).
     """
     global _model, _model_load_error
@@ -49,7 +50,7 @@ def init_embedding_model() -> bool:
     logger.info("Loading embedding model...")
     try:
         ensure_runtime_dirs()
-        _model = SentenceTransformer(EMBEDDING_MODEL)
+        _model = TextEmbedding(model_name=EMBEDDING_MODEL)
         logger.info("Embedding model loaded.")
         return True
     except Exception as exc:
@@ -58,7 +59,7 @@ def init_embedding_model() -> bool:
         return False
 
 
-def get_embedding_model() -> SentenceTransformer:
+def get_embedding_model() -> TextEmbedding:
     global _cache_use_logged
     if _model is not None:
         if not _cache_use_logged:
@@ -78,12 +79,22 @@ def get_embedding_model_error() -> Optional[str]:
     return _model_load_error
 
 
+def chroma_has_notes() -> bool:
+    try:
+        collection = get_chroma_client().get_collection(COLLECTION_NAME)
+        return collection.count() > 0
+    except Exception:
+        return False
+
+
 def embed_texts(texts: list[str]) -> list[list[float]]:
-    return get_embedding_model().encode(texts).tolist()
+    model = get_embedding_model()
+    return [vec.tolist() for vec in model.embed(texts)]
 
 
 def embed_query(query: str) -> list[list[float]]:
-    return get_embedding_model().encode([query]).tolist()
+    model = get_embedding_model()
+    return [vec.tolist() for vec in model.embed([query])]
 
 
 def get_collection():

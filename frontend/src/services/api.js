@@ -7,6 +7,22 @@ const client = axios.create({
   timeout: 120000,
 });
 
+export function getApiErrorMessage(err, fallback) {
+  if (err?.response?.data?.error) return err.response.data.error;
+  if (err?.response?.data?.detail) {
+    return typeof err.response.data.detail === 'string'
+      ? err.response.data.detail
+      : JSON.stringify(err.response.data.detail);
+  }
+  if (err?.response?.status === 502) {
+    return 'Backend crashed (502). The server may be out of memory — redeploy after the latest fix.';
+  }
+  if (err?.code === 'ERR_NETWORK') {
+    return 'Cannot reach the backend. Check VITE_API_URL and CORS settings.';
+  }
+  return fallback;
+}
+
 export async function fetchHealth() {
   const { data } = await client.get('/health');
   return data;
