@@ -1,0 +1,52 @@
+[
+  {
+    "id": "task-001",
+    "client": "Acme",
+    "title": "Send revised enterprise pricing proposal",
+    "status": "pending",
+    "priority": "high",
+    "due_date": "2026-07-28",
+    "assignee": "Alice Chen",
+    "notes": "Jane requested updated pricing with volume discount tier before Q3 review."
+  },
+  {
+    "id": "task-002",
+    "client": "Acme",
+    "title": "Confirm SSO integration timeline with engineering",
+    "status": "pending",
+    "priority": "medium",
+    "due_date": "2026-07-29",
+    "assignee": "Bob Martinez",
+    "notes": "Acme IT team needs SSO before enterprise rollout."
+  },
+  {
+    "id": "task-003",
+    "client": "Acme",
+    "title": "Share Q2 usage analytics report",
+    "status": "done",
+    "priority": "low",
+    "due_date": "2026-07-20",
+    "assignee": "Alice Chen",
+    "notes": "Delivered via email on 2026-07-18."
+  },
+  {
+    "id": "task-004",
+    "client": "Globex",
+    "title": "Prepare discovery call deck",
+    "status": "pending",
+    "priority": "high",
+    "due_date": "2026-07-29",
+    "assignee": "Alice Chen",
+    "notes": "Include API integration case study and pilot timeline."
+  },
+  {
+    "id": "task-005",
+    "client": "Globex",
+    "title": "Schedule technical deep-dive with Robert Smith",
+    "status": "pending",
+    "priority": "medium",
+    "due_date": "2026-08-05",
+    "assignee": "Bob Martinez",
+    "notes": "Robert wants to review webhook architecture before committing."
+  }
+]

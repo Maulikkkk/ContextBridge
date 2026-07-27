@@ -1,0 +1,11 @@
+services:
+  contextbridge:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+    env_file:
+      - .env
+    environment:
+      - DATA_DIR=/app/data

@@ -1,0 +1,40 @@
+[
+  {
+    "id": "evt-001",
+    "title": "Acme Corp — Q3 Business Review",
+    "client": "Acme",
+    "date": "2026-07-28",
+    "time": "10:00",
+    "duration_minutes": 60,
+    "location": "Zoom",
+    "attendees": [
+      {"name": "Jane Doe", "role": "VP Operations", "company": "Acme Corp"},
+      {"name": "Alice Chen", "role": "Account Executive", "company": "Our Team"},
+      {"name": "Bob Martinez", "role": "Solutions Engineer", "company": "Our Team"}
+    ],
+    "agenda": [
+      "Review Q3 implementation milestones",
+      "Discuss enterprise tier upgrade",
+      "Address open pricing proposal",
+      "Align on renewal timeline"
+    ]
+  },
+  {
+    "id": "evt-002",
+    "title": "Globex — Discovery Call",
+    "client": "Globex",
+    "date": "2026-07-30",
+    "time": "14:00",
+    "duration_minutes": 45,
+    "location": "Microsoft Teams",
+    "attendees": [
+      {"name": "Robert Smith", "role": "CTO", "company": "Globex Industries"},
+      {"name": "Alice Chen", "role": "Account Executive", "company": "Our Team"}
+    ],
+    "agenda": [
+      "Initial needs assessment",
+      "Integration requirements overview",
+      "Next steps and pilot scope"
+    ]
+  }
+]

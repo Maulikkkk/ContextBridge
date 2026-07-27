@@ -1,0 +1,34 @@
+{
+  "Acme": {
+    "company": "Acme Corp",
+    "industry": "Manufacturing",
+    "deal_stage": "Negotiation",
+    "annual_contract_value": 250000,
+    "renewal_date": "2026-09-30",
+    "primary_contact": {
+      "name": "Jane Doe",
+      "title": "VP Operations",
+      "email": "jane.doe@acmecorp.com"
+    },
+    "account_owner": "Alice Chen",
+    "notes": "Acme is evaluating an enterprise tier upgrade. Budget approval expected in Q3. Competitor (Initech) also in consideration.",
+    "health_score": "yellow",
+    "last_interaction": "2026-07-15"
+  },
+  "Globex": {
+    "company": "Globex Industries",
+    "industry": "Logistics",
+    "deal_stage": "Discovery",
+    "annual_contract_value": 120000,
+    "renewal_date": null,
+    "primary_contact": {
+      "name": "Robert Smith",
+      "title": "CTO",
+      "email": "rsmith@globex.com"
+    },
+    "account_owner": "Alice Chen",
+    "notes": "Inbound lead from conference. Interested in API integrations and SSO. Pilot discussion scheduled.",
+    "health_score": "green",
+    "last_interaction": "2026-07-20"
+  }
+}
