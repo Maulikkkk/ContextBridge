@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 
 
 class MeetingBriefRequest(BaseModel):
-    query: str = Field(..., example="Prepare me for tomorrow's Acme meeting")
+    query: str = Field(..., example="Prepare me for Globex meeting")
 
 
 class ContextPackageResponse(BaseModel):

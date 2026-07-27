@@ -23,7 +23,7 @@ const PIPELINE_STEPS = [
 const STEP_INTERVAL_MS = 700;
 
 export function useMeetingBrief() {
-  const [query, setQuery] = useState("Prepare me for tomorrow's Acme meeting");
+  const [query, setQuery] = useState('Prepare me for Globex meeting');
   const [loading, setLoading] = useState(false);
   const [loadingStage, setLoadingStage] = useState(0);
   const [error, setError] = useState(null);

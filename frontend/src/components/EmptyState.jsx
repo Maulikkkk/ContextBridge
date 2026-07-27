@@ -9,7 +9,7 @@ export function EmptyState() {
           Enter a meeting request above to generate an AI-powered meeting brief.
         </p>
         <p className="mt-2 text-sm text-ink-faint">
-          Try: &ldquo;Prepare me for tomorrow&apos;s Acme meeting&rdquo;
+          Try: &ldquo;Prepare me for Globex meeting&rdquo;
         </p>
       </div>
     </section>

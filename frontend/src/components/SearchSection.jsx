@@ -12,12 +12,12 @@ export function SearchSection({ query, onQueryChange, onSubmit, loading, disable
           onChange={(e) => onQueryChange(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && onSubmit()}
           disabled={disabled}
-          placeholder="Prepare me for tomorrow's Acme meeting"
+          placeholder="Prepare me for Globex meeting"
           className="mt-3 w-full rounded-xl border border-surface-border bg-surface-muted px-4 py-4 text-base text-ink placeholder:text-ink-faint transition-colors focus:border-accent focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent/20 disabled:cursor-not-allowed disabled:opacity-60"
         />
         <div className="mt-5 flex items-center justify-between gap-4">
           <p className="text-xs text-ink-faint">
-            Parses client and date, retrieves context, ranks notes, builds package, generates brief.
+            Parses client, retrieves context, ranks notes, builds package, generates brief.
           </p>
           <button
             type="button"

@@ -25,7 +25,7 @@ ranker = Ranker()
 context_builder = ContextBuilder()
 
 
-def parse_query(query: str, request_id: str) -> tuple[str, str]:
+def parse_query(query: str, request_id: str) -> tuple[str, str | None]:
     client_match = re.search(r"\b(\w+)\s+meeting\b", query, re.IGNORECASE)
     if not client_match:
         logger.warning(f"[{request_id}] Unable to parse client from query: {query!r}")
@@ -33,7 +33,7 @@ def parse_query(query: str, request_id: str) -> tuple[str, str]:
 
     date_match = re.search(r"\b(today|tomorrow)\b", query, re.IGNORECASE)
     client = client_match.group(1)
-    date_str = date_match.group(1).lower() if date_match else "tomorrow"
+    date_str = date_match.group(1).lower() if date_match else None
     return client, date_str
 
 
@@ -43,14 +43,17 @@ def meeting_brief(request: MeetingBriefRequest) -> MeetingBriefResponse:
     logger.info(f"[{request_id}] Received meeting-brief request")
 
     client, date_str = parse_query(request.query, request_id)
-    logger.info(f"[{request_id}] Parsed query: client={client}, date={date_str}")
+    if date_str:
+        logger.info(f"[{request_id}] Parsed query: client={client}, date={date_str}")
+    else:
+        logger.info(f"[{request_id}] Parsed query: client={client}, date=next scheduled")
 
-    meeting = calendar_service.find_meeting(client, date_str)
+    meeting = calendar_service.find_meeting_for_client(client, date_str)
     if meeting is None:
-        logger.warning(f"[{request_id}] Meeting not found for client={client}, date={date_str}")
+        logger.warning(f"[{request_id}] No meeting found for client={client}")
         raise HTTPException(
             status_code=404,
-            detail=f"No meeting found for client '{client}' on {date_str}",
+            detail=f"No meeting found for client '{client}'.",
         )
 
     logger.info(f"[{request_id}] Meeting found: {meeting['title']}")
