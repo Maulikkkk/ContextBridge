@@ -1,6 +1,7 @@
 import json
 from datetime import date, timedelta
-from pathlib import Path
+
+from paths import DATA_DIR
 
 
 class CalendarService:
@@ -8,8 +9,8 @@ class CalendarService:
     Handles retrieval of structured meeting information from calendar.json.
     """
 
-    def __init__(self, data_dir: Path | None = None) -> None:
-        self._data_dir = data_dir or Path(__file__).resolve().parent.parent.parent / "data"
+    def __init__(self, data_dir=None) -> None:
+        self._data_dir = data_dir or DATA_DIR
         self._calendar: list[dict] | None = None
 
     def _load_calendar(self) -> list[dict]:

@@ -1,11 +1,10 @@
 services:
-  contextbridge:
+  web:
     build: .
     ports:
-      - "8000:8000"
-    volumes:
-      - ./data:/app/data
-    env_file:
-      - .env
+      - "8001:10000"
     environment:
+      - PROJECT_ROOT=/app
       - DATA_DIR=/app/data
+      - CHROMA_PERSIST_DIR=/app/chroma_db
+      - PORT=10000

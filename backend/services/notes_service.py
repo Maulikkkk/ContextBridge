@@ -1,14 +1,9 @@
 import logging
-from pathlib import Path
+import traceback
 
-import chromadb
-from sentence_transformers import SentenceTransformer
+from embeddings import COLLECTION_NAME, embed_query, get_chroma_client, is_embedding_model_ready
 
 logger = logging.getLogger(__name__)
-
-CHROMA_PATH = Path(__file__).resolve().parent.parent.parent / "chroma_db"
-COLLECTION_NAME = "meeting_notes"
-EMBEDDING_MODEL = "all-MiniLM-L6-v2"
 
 
 class NotesService:
@@ -16,29 +11,26 @@ class NotesService:
     Handles semantic retrieval of meeting notes from ChromaDB.
     """
 
-    def __init__(self) -> None:
-        self._model: SentenceTransformer | None = None
-
-    def _get_model(self) -> SentenceTransformer:
-        if self._model is None:
-            self._model = SentenceTransformer(EMBEDDING_MODEL)
-        return self._model
-
-    def _get_collection(self):
-        chroma_client = chromadb.PersistentClient(path=str(CHROMA_PATH))
-        return chroma_client.get_collection(COLLECTION_NAME)
-
     def search_notes(self, client: str, query: str, top_k: int = 5) -> list[dict]:
+        if not is_embedding_model_ready():
+            logger.warning("Embedding model not ready, skipping note search")
+            return []
+
         try:
-            collection = self._get_collection()
+            collection = get_chroma_client().get_collection(COLLECTION_NAME)
             if collection.count() == 0:
                 logger.info("ChromaDB collection is empty, returning no notes")
                 return []
         except Exception as exc:
-            logger.info(f"ChromaDB unavailable or empty: {exc}")
+            logger.info("ChromaDB unavailable or empty: %s", exc)
             return []
 
-        query_embedding = self._get_model().encode([query]).tolist()
+        try:
+            query_embedding = embed_query(query)
+        except Exception as exc:
+            logger.error("Query embedding failed: %s\n%s", exc, traceback.format_exc())
+            return []
+
         results = collection.query(
             query_embeddings=query_embedding,
             n_results=top_k,
