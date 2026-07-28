@@ -335,4 +335,4 @@ The most important audit artifact is the **Context Package** returned in every `
 
 ---
 
-*Last updated: July 2026. Maintained alongside the ContextBridge repository for the Ninebar take-home assignment.*
+*Last updated: July 2026. Maintained alongside the ContextBridge repository. *
